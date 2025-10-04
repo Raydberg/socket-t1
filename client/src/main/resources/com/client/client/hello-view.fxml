@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" centerShape="false" fillWidth="false" prefHeight="360.0" prefWidth="375.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.client.controllers.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="50.0" top="40.0" />
+    </padding>
+   <TextField fx:id="tf_" />
+    <Button onAction="#onHelloButtonClick" text="Hello!" />
+
+    <Label fx:id="welcomeText" />
+</VBox>
