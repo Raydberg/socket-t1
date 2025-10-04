@@ -1,5 +1,6 @@
 package com.server.server.socket;
 
+import com.server.server.controllers.ServerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ import java.net.Socket;
 public class SocketServer {
     private static final Logger log = LoggerFactory.getLogger(SocketServer.class);
 
-    public static void start(int puerto) throws Exception {
+    public static void start(int puerto, ServerController controller) throws Exception {
         try (ServerSocket listener = new ServerSocket(puerto)) {
             log.info("Servidor listo y escuchando en {}:{}", listener.getInetAddress(), puerto);
 
@@ -26,7 +27,21 @@ public class SocketServer {
                         String recipientName = dataInput.readUTF();
                         int state = dataInput.readInt();
 
-                        log.info("Paquete recibido: Código={}, Destinatario={}, Estado={}", code, recipientName, state);
+                        String estadoTexto = switch (state) {
+                            case 1 ->
+                                    "En camino";
+                            case 2 ->
+                                    "Entregado";
+                            case 3 ->
+                                    "Reprogramado";
+                            default ->
+                                    "Desconocido";
+                        };
+
+                        String paquete = String.format("Código: %s\nDestinatario: %s\nEstado: %s", code, recipientName, estadoTexto);
+                        log.info("Paquete recibido: {}", paquete);
+
+                        controller.mostrarPaquetes(paquete);
                     }
                 }
             }
